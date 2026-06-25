@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cfwtt — Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #000000;
+    --bg-raised: #0d0d0d;
+    --text: #ffffff;
+    --text-dim: #000000;
+    --amber: #ffffff;
+    --teal: #cccccc;
+    --line: #333333;
+    --mono: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  a{color:var(--amber); text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--amber); outline-offset:3px;}
+
+  .wrap{max-width:780px; margin:0 auto; padding:0 24px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    border-bottom:1px solid var(--line);
+  }
+
+  .prompt-line{
+    font-family:var(--mono);
+    color:var(--teal);
+    font-size:0.95rem;
+    margin-bottom:14px;
+    letter-spacing:0.02em;
+  }
+
+  .terminal{
+    font-family:var(--mono);
+    font-size:clamp(1.6rem, 5vw, 3rem);
+    font-weight:700;
+    color:var(--text);
+    min-height:1.3em;
+    white-space:pre-wrap;
+  }
+
+  .terminal .accent{color:var(--amber);}
+
+  .cursor{
+    display:inline-block;
+    width:0.55ch;
+    background:var(--amber);
+    margin-left:2px;
+    animation:blink 1s step-end infinite;
+  }
+
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-sub{
+    margin-top:20px;
+    color:var(--text-dim);
+    font-size:1.05rem;
+    max-width:520px;
+  }
+
+  .hero-links{
+    margin-top:32px;
+    display:flex;
+    gap:24px;
+    font-family:var(--mono);
+    font-size:0.9rem;
+  }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:80px 0;}
+  .eyebrow{
+    font-family:var(--mono);
+    color:var(--teal);
+    font-size:0.8rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:16px;
+  }
+  h2{
+    font-family:var(--mono);
+    font-size:1.8rem;
+    margin-bottom:24px;
+    color:var(--text);
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about p{
+    color:var(--text-dim);
+    max-width:600px;
+    margin-bottom:16px;
+    font-size:1.05rem;
+  }
+  .about strong{color:var(--text); font-weight:600;}
+
+  .stack-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:24px;
+  }
+  .stack-tags span{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--amber);
+    border:1px solid var(--line);
+    padding:4px 10px;
+    border-radius:3px;
+  }
+
+  /* ---------- BUILD LOG / PROJECTS ---------- */
+  .log{border-top:1px solid var(--line);}
+
+  .entry{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    gap:20px;
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .entry:last-child{border-bottom:none;}
+
+  .entry-tag{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    color:var(--text-dim);
+  }
+  .entry-tag .ver{color:var(--amber); display:block; font-size:0.95rem; margin-bottom:4px;}
+
+  .entry-title{
+    font-size:1.15rem;
+    font-weight:600;
+    margin-bottom:8px;
+    color:var(--text);
+  }
+  .entry-desc{color:var(--text-dim); font-size:0.95rem; margin-bottom:10px;}
+  .entry-tech{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    font-family:var(--mono);
+    font-size:0.72rem;
+  }
+  .entry-tech span{
+    color:var(--teal);
+    border:1px solid var(--line);
+    padding:2px 8px;
+    border-radius:3px;
+  }
+
+  @media (max-width:560px){
+    .entry{grid-template-columns:1fr;}
+    .entry-tag{display:flex; gap:10px; align-items:baseline;}
+    .entry-tag .ver{margin-bottom:0;}
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    border-top:1px solid var(--line);
+    text-align:left;
+  }
+  .contact-links{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:20px;
+    font-family:var(--mono);
+    font-size:1rem;
+  }
+  .contact-links a{color:var(--text);}
+  .contact-links a:hover{color:var(--amber);}
+  .contact-links .arrow{color:var(--amber); margin-right:8px;}
+
+  footer{
+    padding:32px 0 48px;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:0.78rem;
+    border-top:1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="prompt-line">visitor@web:~$ whoami</div>
+    <div class="terminal" id="terminal"></div>
+    <p class="hero-sub">I make small game systems in Roblox, scripts that talk to APIs, and anything else I feel like making when bored.</p>
+    <div class="hero-links">
+      <a href="#log">→ build log</a>
+      <a href="#about">→ about</a>
+      <a href="#contact">→ contact</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="eyebrow">// about</div>
+    <h2>About</h2>
+    <p>I'm <strong>cfwtt</strong> — I build things things when bored solo..</p>
+    <p>I'd rather sit down and and start scripting bs instead of planning it out first.</p>
+    <div class="stack-tags">
+      <span>Python</span>
+      <span>Lua / Roblox Studio</span>
+      <span>Async &amp; rate-limited APIs</span>
+      <span>macOS tooling</span>
+      <span>Game UI/UX</span>
+    </div>
+  </div>
+</section>
+
+<section class="log" id="log">
+  <div class="wrap">
+    <div class="eyebrow">// build log</div>
+    <h2>Things I've built</h2>
+
+    <div class="entry">
+      <div class="entry-tag"><span class="ver">v3</span>in progress</div>
+      <div>
+        <div class="entry-title">roblox game system</div>
+        <div class="entry-desc">A small game system withhitman NPCs with target assignment, A-Chassis vehicles with analog thumbstick mobile controls and an expandable live minimap with live player markers along with more.</div>
+        <div class="entry-tech"><span>Lua</span><span>Roblox Studio</span><span>Mobile UI</span></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-tag"><span class="ver">v1</span>shipped</div>
+      <div>
+        <div class="entry-title">usernamesniper.py</div>
+        <div class="entry-desc">An async Python script that scans Minecraft username availability at scale against the Mojang API — with rate limiting, resume support, and graceful interrupt handling so a long run never loses its place.</div>
+        <div class="entry-tech"><span>Python</span><span>asyncio</span><span>Mojang API</span></div>
+      </div>
+    </div>
+<div class="entry">
+      <div class="entry-tag"><span class="ver">v1</span>shipped</div>
+      <div>
+        <div class="entry-title">scat man</div>
+        <div class="entry-desc">A macos app displays one of Toms funniest videos.</div>
+        <div class="entry-tech"><span>Swift</span><span>scatty</span><span>sussy</span></div>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="entry-tag"><span class="ver">v1</span>shipped</div>
+      <div>
+        <div class="entry-title">p4Ons</div>
+        <div class="entry-desc">A terminal-based music player for macOS with Apple Music integration via AppleScript, shuffle/repeat/queue/playlist support, and a proper seek system. Packaged as a clickable .app with a custom icon and DMG installer.</div>
+        <div class="entry-tech"><span>Python</span><span>AppleScript</span><span>macOS</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="eyebrow">// contact</div>
+    <h2>Get in touch</h2>
+    <div class="contact-links">
+      <a href="mailto:chris.me9343@gmail.com"><span class="arrow">→</span>chris.me9343@gmail.com</a>
+      <a href="https://github.com/2yrk"><span class="arrow">→</span>github.com/2yrk</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">built by cfwtt · last updated 2026</div>
+</footer>
+
+<script>
+  const text = "cfwtt\n";
+  const sub = "> bullshitter and the trillest youngin";
+  const el = document.getElementById('terminal');
+  let i = 0;
+  const full = text + sub;
+
+  function type(){
+    if(i <= full.length){
+      let shown = full.slice(0, i);
+      shown = shown.replace('cfwtt', '<span class="accent">cfwtt</span>');
+      el.innerHTML = shown + '<span class="cursor">&nbsp;</span>';
+      i++;
+      setTimeout(type, 55);
+    }
+  }
+  type();
+</script>
+
+</body>
+</html>
